@@ -4,7 +4,7 @@ import { CSSTransitionGroup } from 'react-transition-group';
 import Question from '../components/Question';
 import QuestionCount from '../components/QuestionCount';
 import AnswerOption from '../components/AnswerOption';
-
+import Timer from 'react-compound-timer';
 function Quiz(props) {
   function renderAnswerOptions(key) {
     return (
@@ -20,23 +20,39 @@ function Quiz(props) {
   }
 
   return (
-    <CSSTransitionGroup
-      className="container"
-      component="div"
-      transitionName="fade"
-      transitionEnterTimeout={800}
-      transitionLeaveTimeout={500}
-      transitionAppear
-      transitionAppearTimeout={500}
-    >
-      <div key={props.questionId}>
-        <QuestionCount counter={props.questionId} total={props.questionTotal} />
-        <Question content={props.question} />
-        <ul className="answerOptions">
-          {props.answerOptions.map(renderAnswerOptions)}
-        </ul>
-      </div>
-    </CSSTransitionGroup>
+    <div>
+      <CSSTransitionGroup
+        className="container"
+        component="div"
+        transitionName="fade"
+        transitionEnterTimeout={800}
+        transitionLeaveTimeout={500}
+        transitionAppear
+        transitionAppearTimeout={500}
+      >
+        <div key={props.questionId}>
+          <div className="question__topbar">
+            <QuestionCount counter={props.questionId} total={props.questionTotal} />
+            <div className="questionCount question__timer"><span>Time Left:</span>
+          <span className="question__timer__circle">
+                <Timer initialTime={20 * 1000} direction="backward" checkpoints={[
+                  {
+                    time: 0,
+                    callback: () => { props.onAnswerSelected(); }
+                  }
+                ]}>
+                  <Timer.Seconds />
+                </Timer>
+              </span>
+            </div>
+          </div>
+          <Question content={props.question} />
+          <ul className="answerOptions">
+            {props.answerOptions.map(renderAnswerOptions)}
+          </ul>
+        </div>
+      </CSSTransitionGroup>
+    </div>
   );
 }
 

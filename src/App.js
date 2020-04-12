@@ -16,10 +16,12 @@ class App extends Component {
       answerOptions: [],
       answer: '',
       answersCount: {},
-      result: ''
+      result: '',
+      score: 0
     };
 
     this.handleAnswerSelected = this.handleAnswerSelected.bind(this);
+    this.setNextQuestion = this.setNextQuestion.bind(this);
   }
 
   componentDidMount() {
@@ -53,8 +55,9 @@ class App extends Component {
   }
 
   handleAnswerSelected(event) {
+    if(event)
     this.setUserAnswer(event.currentTarget.value);
-
+    console.log('handleAnswerSelected');
     if (this.state.questionId < quizQuestions.length) {
       setTimeout(() => this.setNextQuestion(), 300);
     } else {
@@ -63,12 +66,20 @@ class App extends Component {
   }
 
   setUserAnswer(answer) {
+    console.log("answer", answer);
+    console.log("this.state.score", this.state.score);
+
+    const score = quizQuestions[this.state.counter].answers.filter((answerItem)=>{
+      return answerItem.type.toLowerCase() === answer.toLowerCase();
+    });
+    console.log(score[0].score);
     this.setState((state, props) => ({
       answersCount: {
         ...state.answersCount,
         [answer]: (state.answersCount[answer] || 0) + 1
       },
-      answer: answer
+      answer: answer,
+      score: score[0].score + state.score
     }));
   }
 
@@ -85,23 +96,34 @@ class App extends Component {
     });
   }
 
+  // getResults() {
+  //   console.log(this.state);
+  //   const answersCount = this.state.answersCount;
+  //   const answersCountKeys = Object.keys(answersCount);
+  //   const answersCountValues = answersCountKeys.map(key => answersCount[key]);
+  //   const maxAnswerCount = Math.max.apply(null, answersCountValues);
+
+  //   return answersCountKeys.filter(key => answersCount[key] === maxAnswerCount);
+  // }
+
   getResults() {
-    const answersCount = this.state.answersCount;
-    const answersCountKeys = Object.keys(answersCount);
-    const answersCountValues = answersCountKeys.map(key => answersCount[key]);
-    const maxAnswerCount = Math.max.apply(null, answersCountValues);
-
-    return answersCountKeys.filter(key => answersCount[key] === maxAnswerCount);
+    console.log(this.state.score)
+    return this.state.score;
   }
-
+  // setResults(result) {
+  //   if (result.length === 1) {
+  //     this.setState({ result: result[0] });
+  //   } else {
+  //     this.setState({ result: 'Undetermined' });
+  //   }
+  // }
   setResults(result) {
-    if (result.length === 1) {
-      this.setState({ result: result[0] });
+    if (result !== undefined) {
+      this.setState({ result });
     } else {
       this.setState({ result: 'Undetermined' });
     }
   }
-
   renderQuiz() {
     return (
       <Quiz
@@ -111,6 +133,8 @@ class App extends Component {
         question={this.state.question}
         questionTotal={quizQuestions.length}
         onAnswerSelected={this.handleAnswerSelected}
+        onSetNextQuestion={this.setNextQuestion}
+        countDownStartsFrom={this.state.timerRestartFrom}
       />
     );
   }

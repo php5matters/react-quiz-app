@@ -4,15 +4,18 @@ var quizQuestions = [
       answers: [
           {
               type: "Microsoft",
-              content: "Halo"
+              content: "Halo",
+              score: 1
           },
           {
               type: "Nintendo",
-              content: "Pokemon"
+              content: "Pokemon",
+              score: 0
           },
           {
               type: "Sony",
-              content: "Uncharted"
+              content: "Uncharted",
+              score: 0
           }
       ]
   },
@@ -21,15 +24,18 @@ var quizQuestions = [
       answers: [
           {
               type: "Microsoft",
-              content: "X-Box"
+              content: "X-Box",
+              score: 1
           },
           {
               type: "Nintendo",
-              content: "Nintendo 64"
+              content: "Nintendo 64",
+              score: 0
           },
           {
               type: "Sony",
-              content: "Playstation 1"
+              content: "Playstation 1",
+              score: 0
           }
       ]
   },
@@ -38,15 +44,18 @@ var quizQuestions = [
       answers: [
           {
               type: "Microsoft",
-              content: "Forza"
+              content: "Forza",
+              score: 1
           },
           {
               type: "Nintendo",
-              content: "Mario Kart"
+              content: "Mario Kart",
+              score: 0
           },
           {
               type: "Sony",
-              content: "Gran Turismo"
+              content: "Gran Turismo",
+              score: 0
           }
       ]
   },
@@ -55,15 +64,18 @@ var quizQuestions = [
       answers: [
           {
               type: "Microsoft",
-              content: "BioShock"
+              content: "BioShock",
+              score: 1
           },
           {
               type: "Nintendo",
-              content: "The Legend of Zelda: Ocarina of Time"
+              content: "The Legend of Zelda: Ocarina of Time",
+              score: 0
           },
           {
               type: "Sony",
-              content: "Final Fantasy VII"
+              content: "Final Fantasy VII",
+              score: 0
           }
       ]
   },
@@ -72,15 +84,18 @@ var quizQuestions = [
       answers: [
           {
               type: "Microsoft",
-              content: "X-Box One"
+              content: "X-Box One",
+              score: 1
           },
           {
               type: "Nintendo",
-              content: "Wii U"
+              content: "Wii U",
+              score: 0
           },
           {
               type: "Sony",
-              content: "Playstation 4"
+              content: "Playstation 4",
+              score: 0
           }
       ]
   }
