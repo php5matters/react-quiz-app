@@ -47,3 +47,7 @@
   text-decoration: underline;
   cursor: pointer;
 }
+.quiz__help__text {
+  color: #999999;
+  text-align: center;
+}

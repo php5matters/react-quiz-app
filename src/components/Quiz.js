@@ -50,8 +50,11 @@ function Quiz(props) {
           <ul className="answerOptions">
             {props.answerOptions.map(renderAnswerOptions)}
           </ul>
+          
         </div>
       </CSSTransitionGroup>
+      <div className="quiz__help__text"><small>Answer the question above to continue.</small></div>
+
     </div>
   );
 }
