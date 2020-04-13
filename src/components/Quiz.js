@@ -35,7 +35,7 @@ function Quiz(props) {
             <QuestionCount counter={props.questionId} total={props.questionTotal} />
             <div className="questionCount question__timer"><span>Time Left:</span>
           <span className="question__timer__circle">
-                <Timer initialTime={20 * 1000} direction="backward" checkpoints={[
+                <Timer initialTime={10 * 1000} direction="backward" checkpoints={[
                   {
                     time: 0,
                     callback: () => { props.onAnswerSelected(); }

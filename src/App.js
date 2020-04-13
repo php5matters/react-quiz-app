@@ -3,6 +3,8 @@ import quizQuestions from './api/quizQuestions';
 import Quiz from './components/Quiz';
 import Result from './components/Result';
 import logo from './svg/logo.svg';
+// import 'materialize-css/dist/css/materialize.min.css'
+
 import './App.css';
 
 class App extends Component {
@@ -21,7 +23,8 @@ class App extends Component {
     };
 
     this.handleAnswerSelected = this.handleAnswerSelected.bind(this);
-    this.setNextQuestion = this.setNextQuestion.bind(this);
+    // this.setNextQuestion = this.setNextQuestion.bind(this);
+    this.resetQuiz = this.resetQuiz.bind(this);
   }
 
   componentDidMount() {
@@ -34,6 +37,23 @@ class App extends Component {
     });
   }
 
+  resetQuiz() {
+    this.setState({
+      counter: 0,
+      questionId: 1,
+      answer: '',
+      answersCount: {},
+      result: '',
+      score: 0
+    });
+    const shuffledAnswerOptions = quizQuestions.map(question =>
+      this.shuffleArray(question.answers)
+    );
+    this.setState({
+      question: quizQuestions[0].question,
+      answerOptions: shuffledAnswerOptions[0]
+    });
+  }
   shuffleArray(array) {
     var currentIndex = array.length,
       temporaryValue,
@@ -61,6 +81,7 @@ class App extends Component {
     if (this.state.questionId < quizQuestions.length) {
       setTimeout(() => this.setNextQuestion(), 300);
     } else {
+      console.log('getting-results');
       setTimeout(() => this.setResults(this.getResults()), 300);
     }
   }
@@ -119,6 +140,7 @@ class App extends Component {
   // }
   setResults(result) {
     if (result !== undefined) {
+      console.log('setting result');
       this.setState({ result });
     } else {
       this.setState({ result: 'Undetermined' });
@@ -133,24 +155,27 @@ class App extends Component {
         question={this.state.question}
         questionTotal={quizQuestions.length}
         onAnswerSelected={this.handleAnswerSelected}
-        onSetNextQuestion={this.setNextQuestion}
         countDownStartsFrom={this.state.timerRestartFrom}
       />
     );
   }
 
   renderResult() {
+    console.log('rendering result');
     return <Result quizResult={this.state.result} />;
   }
 
   render() {
     return (
       <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>React Quiz</h2>
-        </div>
-        {this.state.result ? this.renderResult() : this.renderQuiz()}
+      
+      <div className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <h2>Quiz for All</h2>
+        
+        <button onClick={this.resetQuiz} className="reset__quiz">Reset Quiz <i className="material-icons">refresh</i></button>
+      </div>
+        { this.state.result !== '' ? this.renderResult() : this.renderQuiz()}
       </div>
     );
   }
